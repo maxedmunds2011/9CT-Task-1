@@ -2,6 +2,9 @@
 
 ## Identifying and Defining
 
+### Mind Map: 
+
+
 ### Hypothesis:
 People living in Sydney have a more positive viewpoint of Public Transport than Central Coast/Newcastle does.
 
@@ -37,4 +40,16 @@ Postconditions:
 
 ## Researching and Planning
 
-### Research
+### Research & Findings:
+
+### Data Dictionary:
+| Field | Datatype | Display Format | Description | Example | Validation 
+| ----------- | ----------- | ----------- | ----------- |----------- |----------- |
+| location | object | () |
+| train_reliable | float64 |  |
+| bus_reliable | float64 |  |
+| other_transport | object |  |
+| often_transport | object |  |
+| time_transport | object |  |
+| word_transport | object |  |
+| transport_rating | float64 |  | 
