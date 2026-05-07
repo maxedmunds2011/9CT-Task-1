@@ -33,4 +33,8 @@ Main Flow:
 
 Postconditions:
 - User has viewed and interacted with data
-- Data remains available after use
+- Data remains available after use\
+
+## Researching and Planning
+
+### Research
