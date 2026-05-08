@@ -44,12 +44,12 @@ Postconditions:
 
 ### Data Dictionary:
 | Field | Datatype | Display Format | Description | Example | Validation 
-| ----------- | ----------- | ----------- | ----------- |----------- |----------- |
-| location | object | () |
-| train_reliable | float64 |  |
-| bus_reliable | float64 |  |
-| other_transport | object |  |
-| often_transport | object |  |
-| time_transport | object |  |
-| word_transport | object |  |
-| transport_rating | float64 |  | 
+| - | - | - | - |- | - |
+| location | object | AAA | What area the user is located in | SYD | Must be 3 letters, only 3 options |
+| train_reliable | integer64 | N | The user's rating out of 5 for trains | 4 | Must be integer from 1 - 5 |
+| bus_reliable | integer64 | N | The user's rating out of 5 for buses | 2 | Must be integer from 1 - 5 |
+| other_transport | object | AA...AA | If the user catches other transport | Ferry - Useful | Will state 'N/A' if nothing |
+| often_transport | object | NN - NN  or +- NN | How often the user's transport is | 15 - 30 min | Out of 5 strings |
+| time_transport | object | NN - NN or +- NN | How long a user's travel time is | + 60 min | Out of 5 strings |
+| word_transport | object | AA...AA | A word by the user to describe transport | Good | Any amount of words, no integers |
+| transport_rating | integer64 | N | The user's rating out of 10 for transport overall | 8 | Must be integer from 1 - 10 |
