@@ -3,7 +3,7 @@
 ## Identifying and Defining
 
 ### Mind Map: 
-
+![alt text](Untitled-2026-04-30-1617.excalidraw.png)
 
 ### Hypothesis:
 People living in Sydney have a more positive viewpoint of Public Transport than Central Coast/Newcastle does.
@@ -41,7 +41,9 @@ Postconditions:
 ## Researching and Planning
 
 ### Research & Findings:
+Since this is a survey-based analysis, not as much analysis can be gained for the chosen topic of Central Coast VS Sydney Transport Appreciation. However, I was able to get a few early looks into what people's ideas are through the release of a survey, to the class for now.
 
+As of now, it seems that out of the 3 Sydney and 8 Central Coast respondants, Sydney is surprisingly giving a lower appreciation. Nearly every Central Coast respondant gave a good score for overall transport while Sydney's highest was a 5/10, mediocre at best. While it is too early to tell the final results, there are some patterns in the data that give this scenario more sense. Sydney kids have more avaliability for public transport near them, so it could be a case of taking it for granted. However, every kid also takes up to an hour just to get to Gosford. Prolonged time on transport in other scenarios increases the likelihood of unreliability somewhere. Though this will only be a fraction of the total end data, it begins to paint a picture of the patterns that shape how the analysis will go.
 
 ### Data Dictionary:
 | Field | Datatype | Display Format | Description | Example | Validation 
