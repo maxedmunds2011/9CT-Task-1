@@ -42,6 +42,7 @@ Postconditions:
 
 ### Research & Findings:
 
+
 ### Data Dictionary:
 | Field | Datatype | Display Format | Description | Example | Validation 
 | - | - | - | - |- | - |
