@@ -1,3 +1,9 @@
+from data_module import display_dataset
+import os
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def main_menu():
     def start_screen():
         print("___________________________________________________________")
@@ -16,17 +22,23 @@ def main_menu():
     while True: 
         choice = input("Please select an option (1-7): ")
         if choice == '1':
-            print()
+            display_dataset()
+            clear_screen()
         elif choice == '2':
             print()
+            clear_screen()
         elif choice == '3':
             print()
+            clear_screen()
         elif choice == '4':
             print()
+            clear_screen()
         elif choice == '5':
             print()
+            clear_screen()
         elif choice == '6':
             print()
+            clear_screen()
         elif choice == '7':
             print("Exiting the system.")
             break
