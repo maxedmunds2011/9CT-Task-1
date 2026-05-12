@@ -1,4 +1,7 @@
 import pandas as pd
 
 def display_dataset():
-    print()
+    dataset = pd.read_csv('PublicTransportViewpoint.csv')
+    print(dataset)
+
+display_dataset()
