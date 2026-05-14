@@ -27,7 +27,7 @@ def main_menu():
         elif choice == '2':
             show_tables()
             clear_screen()
-        elif choice == '3':
+        elif choice == '3': 
             print()
             clear_screen()
         elif choice == '4':
