@@ -2,11 +2,12 @@ import pandas as pd
 
 def display_dataset():
     dataset = pd.read_csv('PublicTransportViewpoint.csv')
+    dataset = dataset.drop(columns=['Timestamp'])
     print(dataset)
 
 def show_tables():
-    locations = pd.read_csv('PublicTransportViewpoint.csv').location
-    columns = pd.read_csv('PublicTransportViewpoint.csv').columns
+    locations = ['Central Coast', 'Sydney', 'Other']
+    columns = ['location', 'train_reliable', 'bus_reliable', 'other_transport', 'often_transport', 'time_transport', 'word_transport', 'transport_rating']
     print("____________________________________________________________")
     print("|                                                          |")
     print("|                   === Select Table ===                   |")
@@ -17,18 +18,17 @@ def show_tables():
     print("|            4. One specific location                      |")
     print("|            5. Exit to main menu                          |")
     print("|__________________________________________________________|")
-    table_choice = input("Please select an option (1-5): ")
-    transport_df = pd.read_csv('PublicTransportViewpoint.csv')
-    for x in transport_df.location:
-        if x == 'Other':
-            print()
     while True:
+        table_choice = input("Please select an option (1-5): ")
+        transport_df = pd.read_csv('PublicTransportViewpoint.csv')
+
         if table_choice == '1':
             table = pd.read_csv('PublicTransportViewpoint.csv',
-                                header = "All Data Table",
+                                header = None,
                                 names = ['location', 'train_reliable', 'bus_reliable', 'other_transport', 'often_transport', 'time_transport', 'word_transport', 'transport_rating']
                                 )
-            print(table)
+            table
+
         elif table_choice == '2':
             print(locations)
             first_location = input("Please enter the location you want to view: ")
@@ -38,12 +38,13 @@ def show_tables():
                     locations.remove(first_location, second_location)
                     new_df = transport_df.drop(rows=[locations])
                     new_table = pd.read_csv(new_df,
-                                            header = f"{first_location} vs {second_location} Table",
+                                            header = None,
                                             names = ['location', 'train_reliable', 'bus_reliable', 'other_transport', 'often_transport', 'time_transport', 'word_transport', 'transport_rating']
                                             )
                     print(new_table)
                 else:
                     print("Invalid location. Please select from the available locations.")
+
         elif table_choice == '3':
             print(columns)
             first_column = input("Please enter the column you want to view: ")
@@ -53,12 +54,13 @@ def show_tables():
                     columns.remove(first_column, second_column)
                     new_df = transport_df.drop(columns=[columns])
                     new_table = pd.read_csv(new_df,
-                                            header = f"{first_column} vs {second_column} Table",
+                                            header = None,
                                             names = [first_column, second_column]
                                             )
                     print(new_table)
                 else:
                     print("Invalid column. Please select from the available columns.")
+
         elif table_choice == '4':
             print(locations)
             location = input("Please enter the location you want to view: ")
@@ -67,14 +69,17 @@ def show_tables():
                     locations.remove(location)
                     new_df = transport_df.drop(rows=[locations])
                     new_table = pd.read_csv(new_df,
-                                            header = f"{location} Table",
+                                            header = None,
                                             names = ['location', 'train_reliable', 'bus_reliable', 'other_transport', 'often_transport', 'time_transport', 'word_transport', 'transport_rating']
                                             )
                     print(new_table)
                 else:
                     print("Invalid location. Please select from the available locations.")
+
         elif table_choice == '5':
             print("Returning to main menu.")
             break
         else:
             print("Invalid option. Please select a number between 1 and 5.")
+
+show_tables()

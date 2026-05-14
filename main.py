@@ -1,4 +1,4 @@
-from data_module import display_dataset
+from data_module import display_dataset, show_tables
 import os
 
 def clear_screen():
@@ -25,7 +25,7 @@ def main_menu():
             display_dataset()
             clear_screen()
         elif choice == '2':
-            print()
+            show_tables()
             clear_screen()
         elif choice == '3':
             print()
@@ -44,4 +44,5 @@ def main_menu():
             break
         else:
             print("Invalid option. Please select a number between 1 and 7.")
+            
 main_menu()
