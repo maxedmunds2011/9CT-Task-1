@@ -23,7 +23,7 @@ def main_menu():
         choice = input("Please select an option (1-7): ")
         if choice == '1':
             display_dataset()
-            clear_screen()
+            #clear_screen()
         elif choice == '2':
             show_tables()
             clear_screen()
