@@ -1,8 +1,6 @@
-from data_module import display_dataset, show_tables
+from data_module import display_dataset, show_tables, search_data, clear_screen
 import os
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 def main_menu():
     def start_screen():
@@ -18,31 +16,36 @@ def main_menu():
         print("|            6. Save data and changes                     |")
         print("|            7. Exit system                               |")
         print("|_________________________________________________________|")
-    start_screen()
+
     while True: 
+        start_screen() 
         choice = input("Please select an option (1-7): ")
+        clear_screen()
+
         if choice == '1':
             display_dataset()
-            #clear_screen()
+
         elif choice == '2':
             show_tables()
-            clear_screen()
+
         elif choice == '3': 
             print()
-            clear_screen()
+
         elif choice == '4':
-            print()
-            clear_screen()
+            search_data()
+
         elif choice == '5':
             print()
-            clear_screen()
+
         elif choice == '6':
             print()
-            clear_screen()
+
         elif choice == '7':
             print("Exiting the system.")
             break
+
         else:
-            print("Invalid option. Please select a number between 1 and 7.")
+            print("Invalid option.")
             
+
 main_menu()
