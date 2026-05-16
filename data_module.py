@@ -20,12 +20,6 @@ def show_tables():
     while True:
         table_choice = input("Please select an option (1-4): ")
         transport_df = pd.read_csv('PublicTransportViewpoint.csv')
-        # 1. Set columns equal to the first row (index 0)
-       # transport_df.columns = transport_df.iloc[0]
-        print(transport_df)
-
-# 2. Remove the first row from the data and reset the index
-        #transport_df = transport_df[1:].reset_index(drop=True)
 
         if table_choice == '1':
             while True:
@@ -33,34 +27,24 @@ def show_tables():
                 first_location = input("Please enter the location you want to view: ")
                 second_location = input("Please enter the location you want to compare it to: ")
                 if first_location and second_location in locations:
-                    if first_location and second_location != 'Other':
-                        dropped_rows = transport_df[transport_df['location'] == "Other"].index
-                        transport_df.drop(dropped_rows)
-                        print(transport_df)
-                    elif first_location and second_location != 'Central Coast':
-                        transport_df = transport_df.drop (transport_df[transport_df['location'] == "Central Coast"].index)
-                        print(transport_df)
-                    elif first_location and second_location != 'Sydney':
-                        transport_df = transport_df.drop (transport_df[transport_df['location'] == "Sydney"].index)
-                        print(transport_df)
-                    else:
-                        print("Invalid locations. Try again.")
+                    locations.remove(first_location)
+                    locations.remove(second_location)
+                    for x in locations:
+                        transport_df = transport_df.drop(transport_df[transport_df["location"] == x].index)
+                print(transport_df)
+
 
         elif table_choice == '2':
-            print(columns)
-            first_column = input("Please enter the column you want to view: ")
-            second_column = input("Please enter the column you want to compare it to: ")
             while True:
-                if first_column in columns and second_column in columns:
-                    columns.remove(first_column, second_column)
-                    new_df = transport_df.drop(columns=[columns])
-                    new_table = pd.read_csv(new_df,
-                                            header = None,
-                                            names = [first_column, second_column]
-                                            )
-                    print(new_table)
-                else:
-                    print("Invalid column. Please select from the available columns.")
+                print(columns)
+                first_column = input("Please enter the column you want to view: ")
+                second_column = input("Please enter the column you want to compare it to: ")
+                if first_column and second_column in columns:
+                    columns.remove (first_column)
+                    columns.remove (second_column)
+                    for x in columns:
+                        transport_df = transport_df.drop(columns=x)
+                print(transport_df)          
 
         elif table_choice == '3':
             print(locations)
