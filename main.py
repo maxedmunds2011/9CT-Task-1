@@ -1,4 +1,4 @@
-from data_module import display_dataset, show_tables, search_data, clear_screen
+from data_module import display_dataset, show_tables, search_data, clear_screen, change_data, show_graphs
 import os
 
 
@@ -29,13 +29,13 @@ def main_menu():
             show_tables()
 
         elif choice == '3': 
-            print()
+            show_graphs()
 
         elif choice == '4':
             search_data()
 
         elif choice == '5':
-            print()
+            change_data()
 
         elif choice == '6':
             print()

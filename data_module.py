@@ -2,6 +2,8 @@ import os
 
 import pandas as pd   
 
+import matplotlib.pyplot as plt
+
 dictionary = {
     'locations': {
         'Central Coast': {'train_reliable': {'mean': '', 'median': '', 'mode': '', 'min': '', 'max': '', 'number': ''},
@@ -105,6 +107,124 @@ def show_tables():
 
         else:
             print("Invalid option. Please select a number between 1 and 5.")
+
+
+def graph_data():
+    transport_df = pd.read_csv('PublicTransportViewpoint.csv')
+    data_locations = ['Central Coast', 'Sydney', 'Other']
+
+    for x in data_locations:
+        dictionary('locations'[x]['train_reliable']['mean']) == transport_df[transport_df['location'] == x]['train_reliable'].mean().round(2)
+        dictionary('locations'[x]['train_reliable']['median']) == transport_df[transport_df['location'] == x]['train_reliable'].median().round(2)
+        dictionary('locations'[x]['train_reliable']['mode']) == transport_df[transport_df['location'] == x]['train_reliable'].mode().round(2).tolist()
+        dictionary('locations'[x]['train_reliable']['min']) == transport_df[transport_df['location'] == x]['train_reliable'].min()
+        dictionary('locations'[x]['train_reliable']['max']) == transport_df[transport_df['location'] == x]['train_reliable'].max()
+        dictionary('locations'[x]['train_reliable']['number']) == transport_df[transport_df['location'] == x]['train_reliable'].count()
+
+        dictionary('locations'[x]['bus_reliable']['mean']) == transport_df[transport_df['location'] == x]['bus_reliable'].mean().round(2)
+        dictionary('locations'[x]['bus_reliable']['median']) == transport_df[transport_df['location'] == x]['bus_reliable'].median().round(2)
+        dictionary('locations'[x]['bus_reliable']['mode']) == transport_df[transport_df['location'] == x]['bus_reliable'].mode().round(2).tolist()
+        dictionary('locations'[x]['bus_reliable']['min']) == transport_df[transport_df['location'] == x]['bus_reliable'].min()
+        dictionary('locations'[x]['bus_reliable']['max']) == transport_df[transport_df['location'] == x]['bus_reliable'].max()
+        dictionary('locations'[x]['bus_reliable']['number']) == transport_df[transport_df['location'] == x]['bus_reliable'].count()
+
+        dictionary('locations'[x]['transport_rating']['mean']) == transport_df[transport_df['location'] == x]['transport_rating'].mean().round(2)
+        dictionary('locations'[x]['transport_rating']['median']) == transport_df[transport_df['location'] == x]['transport_rating'].median().round(2)
+        dictionary('locations'[x]['transport_rating']['mode']) == transport_df[transport_df['location'] == x]['transport_rating'].mode().round(2).tolist()
+        dictionary('locations'[x]['transport_rating']['min']) == transport_df[transport_df['location'] == x]['transport_rating'].min()
+        dictionary('locations'[x]['transport_rating']['max']) == transport_df[transport_df['location'] == x]['transport_rating'].max()
+        dictionary('locations'[x]['transport_rating']['number']) == transport_df[transport_df['location'] == x]['transport_rating'].count()
+        
+        dictionary('locations'[x]['other_transport']) == transport_df[transport_df['location'] == x]['other_transport'].tolist()
+
+        dictionary('locations'[x]['word_transport']['positive']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['good', 'yummy'])].count()
+        dictionary('locations'[x]['word_transport']['negative']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['bad', 'unreliable', 'inconsistent', 'tiring'])].count()
+        dictionary('locations'[x]['word_transport']['neutral']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['average', 'idk'])].count()
+        dictionary('locations'[x]['word_transport']['transport']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['train', 'bus', 'car', 'walk'])].count()
+        dictionary('locations'[x]['word_transport']['crowded']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['crowded', 'loud'])].count()
+        dictionary('locations'[x]['word_transport']['other']) == transport_df[transport_df['location'] == x]['word_transport'][~transport_df['word_transport'].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
+
+        dictionary('locations'[x]['often_transport']['number1']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == 'Less than 15 minutes'].count()
+        dictionary('locations'[x]['often_transport']['number2']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == '15 - 30 minutes'].count()
+        dictionary('locations'[x]['often_transport']['number3']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == '30 - 45 minutes'].count()
+        dictionary('locations'[x]['often_transport']['number4']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == '45 - 60 minutes'].count()
+        dictionary('locations'[x]['often_transport']['number5']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == 'More than 60 minutes'].count()
+
+        dictionary('locations'[x]['time_transport']['number1']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == 'Less than 15 minutes'].count()
+        dictionary('locations'[x]['time_transport']['number2']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '15 - 30 minutes'].count()
+        dictionary('locations'[x]['time_transport']['number3']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '30 - 45 minutes'].count()
+        dictionary('locations'[x]['time_transport']['number4']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '45 - 60 minutes'].count()
+        dictionary('locations'[x]['time_transport']['number5']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == 'More than 60 minutes'].count()
+
+
+
+
+def show_graphs():
+    while True:
+
+        graph_locations = ['Central Coast', 'Sydney', 'Other']
+        graph_columns = ['train_reliable', 'bus_reliable', 'transport_rating', 'other_transport', 'often_transport', 'time_transport', 'word_transport']
+
+        print("____________________________________________________________")
+        print("|                                                          |")
+        print("|                   === Select Graph ===                   |")
+        print("|                                                          |")
+        print("|            1. Graph by single location                   |")
+        print("|            2  Graph by two locations                     |")
+        print("|            3  Graph by all locations                     |")
+        print("|            4. Graph by column                            |")
+        print("|            5. Exit to main menu                          |")
+        print("|__________________________________________________________|")
+
+        graph_choice = input("Please select an option (1-5): ")
+        transport_df = pd.read_csv('PublicTransportViewpoint.csv')
+
+        if graph_choice == '1':
+            print(graph_locations)
+            single_location = input("Please enter the location you want to view: ")
+            if single_location in graph_locations:
+                graph_locations.remove(single_location)
+                for x in graph_locations:
+                    location_graph = transport_df.drop(transport_df[transport_df["location"] == x].index) 
+                
+                print(graph_columns)
+                column = input("Please enter the column you want to graph: ")
+                if column in graph_columns:
+                    if column == 'train_reliable' or column == 'bus_reliable' or column == 'transport_rating':
+                        location_graph[column].value_counts().plot(kind='bar')
+                        plt.title(f"{column} for {single_location}")
+                        plt.xlabel(column)
+                        plt.ylabel("Count")
+                        plt.show()
+
+                    elif column == 'other_transport':
+                        location_graph[column].value_counts().plot(kind='bar')
+                        plt.title(f"{column} for {single_location}")
+                        plt.xlabel(column)
+                        plt.ylabel("Count")
+                        plt.show()
+
+                    elif column == 'often_transport' or column == 'time_transport':
+                        location_graph[column].value_counts().plot(kind='bar')
+                        plt.title(f"{column} for {single_location}")
+                        plt.xlabel(column)
+                        plt.ylabel("Count")
+                        plt.show()
+
+                    elif column == 'word_transport':
+                        words = {
+                            'positive': location_graph[column][location_graph[column].isin(['good', 'yummy'])].count(),
+                            'negative': location_graph[column][location_graph[column].isin(['bad', 'unreliable', 'inconsistent', 'tiring'])].count(),
+                            'neutral': location_graph[column][location_graph[column].isin(['average', 'idk'])].count(),
+                            'transport': location_graph[column][location_graph[column].isin(['train', 'bus', 'car', 'walk'])].count(),
+                            'crowded': location_graph[column][location_graph[column].isin(['crowded', 'loud'])].count(),
+                            'other': location_graph[column][~location_graph[column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
+                        }
+                        pd.Series(words).plot(kind='bar')
+                        plt.title(f"{column} for {single_location}")
+                        plt.xlabel(column)
+                        plt.ylabel("Count")
+                        plt.show()
 
 
 def search_data():
@@ -345,4 +465,35 @@ def search_data():
 
         elif search_choice == '4':
             print("Returning to main menu.")
-            break
+            break 
+
+
+def change_data():
+    print("This option will allow you to change the data in the dataset. You can change the values for the columns or the locations.")  
+    while True:
+        change_locations = ['Central Coast', 'Sydney', 'Other']
+
+
+        print("____________________________________________________________")
+        print("|                                                          |")
+        print("|                   === Change Data ===                    |")
+        print("|                                                          |")
+        print("|            1. Change location data                       |")
+        print("|            2. Change column data                         |")
+        print("|            3. Change other data                          |")
+        print("|            4. Exit to main menu                          |")
+        print("|__________________________________________________________|")
+
+        change_choice = input("Please select an option (1-4): ")
+
+        if change_choice == '1':
+            print("This option will allow you to change the location data for a specific entry. You can change the location to either Central Coast, Sydney, or Other.")
+
+            change_dataset = pd.read_csv('PublicTransportViewpoint.csv')
+            print(change_dataset)
+
+            print(f"Choose a location to change out of: {change_locations}")
+            change_location = input("Please enter the location you want to change: ")
+
+            if change_location in change_locations:
+                print()
