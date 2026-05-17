@@ -1,3 +1,4 @@
+import csv
 import os
 
 import pandas as pd   
@@ -466,6 +467,9 @@ def search_data():
 
 
 def change_data():
+
+
+
     print("This option will allow you to change the data in the dataset. You can change the values for the columns or the locations.")  
     while True:
         change_locations = ['Central Coast', 'Sydney', 'Other']
@@ -517,3 +521,13 @@ def change_data():
                 change_dataset.at[index, column] = new_value
                 change_dataset.to_csv('PublicTransportViewpoint.csv', index=False)
                 print("Column data changed successfully.")
+
+
+def save_data():
+    transport_df = "PublicTransportViewpoint.csv"
+    with open('output.csv', 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(transport_df)
+        with open('output.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(transport_df)

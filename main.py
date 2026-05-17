@@ -1,4 +1,4 @@
-from data_module import display_dataset, show_tables, search_data, clear_screen, change_data, show_graphs
+from data_module import display_dataset, show_tables, search_data, clear_screen, change_data, show_graphs, save_data
 import os
 
 
@@ -38,7 +38,7 @@ def main_menu():
             change_data()
 
         elif choice == '6':
-            print()
+            save_data()
 
         elif choice == '7':
             print("Exiting the system.")
