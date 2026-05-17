@@ -1,7 +1,6 @@
 import os
 
 import pandas as pd   
-
 import matplotlib.pyplot as plt
 
 dictionary = {
@@ -155,8 +154,6 @@ def graph_data():
         dictionary('locations'[x]['time_transport']['number3']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '30 - 45 minutes'].count()
         dictionary('locations'[x]['time_transport']['number4']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '45 - 60 minutes'].count()
         dictionary('locations'[x]['time_transport']['number5']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == 'More than 60 minutes'].count()
-
-
 
 
 def show_graphs():
@@ -496,4 +493,27 @@ def change_data():
             change_location = input("Please enter the location you want to change: ")
 
             if change_location in change_locations:
-                print()
+                change_locations.remove(change_location)
+                for x in change_locations:
+                    change_dataset = change_dataset.drop(change_dataset[change_dataset["location"] == x].index)
+                
+                print(change_dataset)
+                index = int(input("Please enter the index of the entry you want to change: "))
+                change_dataset.at[index, 'location'] = input("Please enter the new location: ")
+                change_dataset.to_csv('PublicTransportViewpoint.csv', index=False)
+                print("Location data changed successfully.")
+
+        elif change_choice == '2':
+            print("This option will allow you to change the column data for a specific entry. You can change the data for any of the columns, but you must follow the same format as the original data.")
+
+            change_dataset = pd.read_csv('PublicTransportViewpoint.csv')
+            print(change_dataset)
+
+            index = int(input("Please enter the index of the entry you want to change: "))
+            column = input("Please enter the column you want to change: ")
+            new_value = input("Please enter the new value: ")
+
+            if column in change_dataset.columns:
+                change_dataset.at[index, column] = new_value
+                change_dataset.to_csv('PublicTransportViewpoint.csv', index=False)
+                print("Column data changed successfully.")
