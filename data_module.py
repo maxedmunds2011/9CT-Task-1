@@ -1,7 +1,7 @@
 import csv
 import os
 import pandas as pd   
-import matplotlib as plt 
+import matplotlib.pyplot as plt 
 
 dictionary = {
     'locations': {
@@ -111,49 +111,53 @@ def show_tables():
 def graph_data():
     transport_df = pd.read_csv('PublicTransportViewpoint.csv')
     data_locations = ['Central Coast', 'Sydney', 'Other']
-
     for x in data_locations:
-        dictionary('locations'[x]['train_reliable']['mean']) == transport_df[transport_df['location'] == x]['train_reliable'].mean().round(2)
-        dictionary('locations'[x]['train_reliable']['median']) == transport_df[transport_df['location'] == x]['train_reliable'].median().round(2)
-        dictionary('locations'[x]['train_reliable']['mode']) == transport_df[transport_df['location'] == x]['train_reliable'].mode().round(2).tolist()
-        dictionary('locations'[x]['train_reliable']['min']) == transport_df[transport_df['location'] == x]['train_reliable'].min()
-        dictionary('locations'[x]['train_reliable']['max']) == transport_df[transport_df['location'] == x]['train_reliable'].max()
-        dictionary('locations'[x]['train_reliable']['number']) == transport_df[transport_df['location'] == x]['train_reliable'].count()
+        loc_df = transport_df[transport_df['location'] == x]
 
-        dictionary('locations'[x]['bus_reliable']['mean']) == transport_df[transport_df['location'] == x]['bus_reliable'].mean().round(2)
-        dictionary('locations'[x]['bus_reliable']['median']) == transport_df[transport_df['location'] == x]['bus_reliable'].median().round(2)
-        dictionary('locations'[x]['bus_reliable']['mode']) == transport_df[transport_df['location'] == x]['bus_reliable'].mode().round(2).tolist()
-        dictionary('locations'[x]['bus_reliable']['min']) == transport_df[transport_df['location'] == x]['bus_reliable'].min()
-        dictionary('locations'[x]['bus_reliable']['max']) == transport_df[transport_df['location'] == x]['bus_reliable'].max()
-        dictionary('locations'[x]['bus_reliable']['number']) == transport_df[transport_df['location'] == x]['bus_reliable'].count()
+        dictionary['locations'][x]['train_reliable']['mean'] = loc_df['train_reliable'].mean().round(2)
+        dictionary['locations'][x]['train_reliable']['median'] = loc_df['train_reliable'].median().round(2)
+        dictionary['locations'][x]['train_reliable']['mode'] = loc_df['train_reliable'].mode().round(2).tolist()
+        dictionary['locations'][x]['train_reliable']['min'] = loc_df['train_reliable'].min()
+        dictionary['locations'][x]['train_reliable']['max'] = loc_df['train_reliable'].max()
+        dictionary['locations'][x]['train_reliable']['number'] = loc_df['train_reliable'].count()
 
-        dictionary('locations'[x]['transport_rating']['mean']) == transport_df[transport_df['location'] == x]['transport_rating'].mean().round(2)
-        dictionary('locations'[x]['transport_rating']['median']) == transport_df[transport_df['location'] == x]['transport_rating'].median().round(2)
-        dictionary('locations'[x]['transport_rating']['mode']) == transport_df[transport_df['location'] == x]['transport_rating'].mode().round(2).tolist()
-        dictionary('locations'[x]['transport_rating']['min']) == transport_df[transport_df['location'] == x]['transport_rating'].min()
-        dictionary('locations'[x]['transport_rating']['max']) == transport_df[transport_df['location'] == x]['transport_rating'].max()
-        dictionary('locations'[x]['transport_rating']['number']) == transport_df[transport_df['location'] == x]['transport_rating'].count()
-        
-        dictionary('locations'[x]['other_transport']) == transport_df[transport_df['location'] == x]['other_transport'].tolist()
+        dictionary['locations'][x]['bus_reliable']['mean'] = loc_df['bus_reliable'].mean().round(2)
+        dictionary['locations'][x]['bus_reliable']['median'] = loc_df['bus_reliable'].median().round(2)
+        dictionary['locations'][x]['bus_reliable']['mode'] = loc_df['bus_reliable'].mode().round(2).tolist()
+        dictionary['locations'][x]['bus_reliable']['min'] = loc_df['bus_reliable'].min()
+        dictionary['locations'][x]['bus_reliable']['max'] = loc_df['bus_reliable'].max()
+        dictionary['locations'][x]['bus_reliable']['number'] = loc_df['bus_reliable'].count()
 
-        dictionary('locations'[x]['word_transport']['positive']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['good', 'yummy'])].count()
-        dictionary('locations'[x]['word_transport']['negative']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['bad', 'unreliable', 'inconsistent', 'tiring'])].count()
-        dictionary('locations'[x]['word_transport']['neutral']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['average', 'idk'])].count()
-        dictionary('locations'[x]['word_transport']['transport']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['train', 'bus', 'car', 'walk'])].count()
-        dictionary('locations'[x]['word_transport']['crowded']) == transport_df[transport_df['location'] == x]['word_transport'][transport_df['word_transport'].isin(['crowded', 'loud'])].count()
-        dictionary('locations'[x]['word_transport']['other']) == transport_df[transport_df['location'] == x]['word_transport'][~transport_df['word_transport'].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
+        dictionary['locations'][x]['transport_rating']['mean'] = loc_df['transport_rating'].mean().round(2)
+        dictionary['locations'][x]['transport_rating']['median'] = loc_df['transport_rating'].median().round(2)
+        dictionary['locations'][x]['transport_rating']['mode'] = loc_df['transport_rating'].mode().round(2).tolist()
+        dictionary['locations'][x]['transport_rating']['min'] = loc_df['transport_rating'].min()
+        dictionary['locations'][x]['transport_rating']['max'] = loc_df['transport_rating'].max()
+        dictionary['locations'][x]['transport_rating']['number'] = loc_df['transport_rating'].count()
 
-        dictionary('locations'[x]['often_transport']['number1']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == 'Less than 15 minutes'].count()
-        dictionary('locations'[x]['often_transport']['number2']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == '15 - 30 minutes'].count()
-        dictionary('locations'[x]['often_transport']['number3']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == '30 - 45 minutes'].count()
-        dictionary('locations'[x]['often_transport']['number4']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == '45 - 60 minutes'].count()
-        dictionary('locations'[x]['often_transport']['number5']) == transport_df[transport_df['location'] == x]['often_transport'][transport_df['often_transport'] == 'More than 60 minutes'].count()
+        dictionary['locations'][x]['other_transport'] = loc_df['other_transport'].tolist()
 
-        dictionary('locations'[x]['time_transport']['number1']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == 'Less than 15 minutes'].count()
-        dictionary('locations'[x]['time_transport']['number2']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '15 - 30 minutes'].count()
-        dictionary('locations'[x]['time_transport']['number3']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '30 - 45 minutes'].count()
-        dictionary('locations'[x]['time_transport']['number4']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == '45 - 60 minutes'].count()
-        dictionary('locations'[x]['time_transport']['number5']) == transport_df[transport_df['location'] == x]['time_transport'][transport_df['time_transport'] == 'More than 60 minutes'].count()
+        word_series = loc_df['word_transport']
+        dictionary['locations'][x]['word_transport']['positive'] = word_series[word_series.isin(['good', 'yummy'])].count()
+        dictionary['locations'][x]['word_transport']['negative'] = word_series[word_series.isin(['bad', 'unreliable', 'inconsistent', 'tiring'])].count()
+        dictionary['locations'][x]['word_transport']['neutral'] = word_series[word_series.isin(['average', 'idk'])].count()
+        dictionary['locations'][x]['word_transport']['transport'] = word_series[word_series.isin(['train', 'bus', 'car', 'walk'])].count()
+        dictionary['locations'][x]['word_transport']['crowded'] = word_series[word_series.isin(['crowded', 'loud'])].count()
+        dictionary['locations'][x]['word_transport']['other'] = word_series[~word_series.isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
+
+        often_series = loc_df['often_transport']
+        dictionary['locations'][x]['often_transport']['number1'] = often_series[often_series == 'Less than 15 minutes'].count()
+        dictionary['locations'][x]['often_transport']['number2'] = often_series[often_series == '15 - 30 minutes'].count()
+        dictionary['locations'][x]['often_transport']['number3'] = often_series[often_series == '30 - 45 minutes'].count()
+        dictionary['locations'][x]['often_transport']['number4'] = often_series[often_series == '45 - 60 minutes'].count()
+        dictionary['locations'][x]['often_transport']['number5'] = often_series[often_series == 'More than 60 minutes'].count()
+
+        time_series = loc_df['time_transport']
+        dictionary['locations'][x]['time_transport']['number1'] = time_series[time_series == 'Less than 15 minutes'].count()
+        dictionary['locations'][x]['time_transport']['number2'] = time_series[time_series == '15 - 30 minutes'].count()
+        dictionary['locations'][x]['time_transport']['number3'] = time_series[time_series == '30 - 45 minutes'].count()
+        dictionary['locations'][x]['time_transport']['number4'] = time_series[time_series == '45 - 60 minutes'].count()
+        dictionary['locations'][x]['time_transport']['number5'] = time_series[time_series == 'More than 60 minutes'].count()
 
 
 def show_graphs():
@@ -169,43 +173,49 @@ def show_graphs():
         print("|            1. Graph by single location                   |")
         print("|            2  Graph by two locations                     |")
         print("|            3  Graph by all locations                     |")
-        print("|            4. Graph by column                            |")
-        print("|            5. Exit to main menu                          |")
+        print("|            4. Graph by single column                     |")
+        print("|            5. Graph by two columns                       |")
+        print("|            6. Exit to main menu                          |")
         print("|__________________________________________________________|")
 
-        graph_choice = input("Please select an option (1-5): ")
+        graph_choice = input("Please select an option (1-6): ")
         transport_df = pd.read_csv('PublicTransportViewpoint.csv')
+        graph_data()
 
         if graph_choice == '1':
             print(graph_locations)
             single_location = input("Please enter the location you want to view: ")
             if single_location in graph_locations:
-                graph_locations.remove(single_location)
-                for x in graph_locations:
-                    location_graph = transport_df.drop(transport_df[transport_df["location"] == x].index) 
+                location_graph = transport_df[transport_df["location"] == single_location]
                 
                 print(graph_columns)
                 column = input("Please enter the column you want to graph: ")
                 if column in graph_columns:
-                    if column == 'train_reliable' or column == 'bus_reliable' or column == 'transport_rating':
-                        location_graph[column].value_counts().plot(kind='bar')
-                        plt.title(f"{column} for {single_location}")
+                    if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
+                        counts = location_graph[column].value_counts().sort_index()
+                        counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
-                        plt.ylabel("Count")
+                        plt.ylabel('Count')
+                        plt.tight_layout()
                         plt.show()
 
                     elif column == 'other_transport':
-                        location_graph[column].value_counts().plot(kind='bar')
-                        plt.title(f"{column} for {single_location}")
+                        counts = location_graph[column]
+                        counts = counts[counts != ""].value_counts().sort_index()
+                        counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
-                        plt.ylabel("Count")
+                        plt.ylabel('Count')
+                        plt.tight_layout()
                         plt.show()
 
-                    elif column == 'often_transport' or column == 'time_transport':
-                        location_graph[column].value_counts().plot(kind='bar')
-                        plt.title(f"{column} for {single_location}")
+                    elif column in ('often_transport', 'time_transport'):
+                        counts = location_graph[column].value_counts().reindex([
+                            'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
+                        ], fill_value=0)
+                        counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
-                        plt.ylabel("Count")
+                        plt.ylabel('Count')
+                        plt.tight_layout()
                         plt.show()
 
                     elif column == 'word_transport':
@@ -217,12 +227,221 @@ def show_graphs():
                             'crowded': location_graph[column][location_graph[column].isin(['crowded', 'loud'])].count(),
                             'other': location_graph[column][~location_graph[column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
                         }
-                        pd.Series(words).plot(kind='bar')
-                        plt.title(f"{column} for {single_location}")
+                        pd.Series(words).plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
-                        plt.ylabel("Count")
+                        plt.ylabel('Count')
+                        plt.tight_layout()
                         plt.show()
 
+        elif graph_choice == '2':
+            print(graph_locations)
+            first_location = input("Please enter the first location you want to view: ")
+            second_location = input("Please enter the second location you want to view: ")
+            if first_location and second_location in graph_locations:
+                location_graph = transport_df[transport_df["location"].isin([first_location, second_location])]
+                
+                print(graph_columns)
+                column = input("Please enter the column you want to graph: ")
+                if column in graph_columns:
+                    if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
+                        counts = location_graph.groupby('location')[column].value_counts().unstack(fill_value=0).sort_index()
+                        counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple', 'brown', 'yellow', 'gray', 'pink', 'lightblue'], alpha=0.3, title=f'{column} for {first_location} and {second_location}')
+                        plt.xlabel(column)
+                        plt.ylabel('Count')
+                        plt.tight_layout()
+                        plt.show()
+
+                    elif column == 'other_transport':
+                        counts = location_graph[location_graph[column] != ""].groupby('location')[column].value_counts().unstack(fill_value=0).sort_index()
+                        counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title=f'{column} for {first_location} and {second_location}')
+                        plt.xlabel(column)
+                        plt.ylabel('Count')
+                        plt.tight_layout()
+                        plt.show()
+
+                    elif column in ('often_transport', 'time_transport'):
+                        counts = location_graph.groupby('location')[column].value_counts().unstack(fill_value=0).reindex([
+                            'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
+                        ], axis=1, fill_value=0)
+                        counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title=f'{column} for {first_location} and {second_location}')
+                        plt.xlabel(column)
+                        plt.ylabel('Count')
+                        plt.tight_layout()
+                        plt.show()
+
+                    elif column == 'word_transport':
+                        words = {
+                            'positive': location_graph[location_graph[column].isin(['good', 'yummy'])].groupby('location')[column].count(),
+                            'negative': location_graph[location_graph[column].isin(['bad', 'unreliable', 'inconsistent', 'tiring'])].groupby('location')[column].count(),
+                            'neutral': location_graph[location_graph[column].isin(['average', 'idk'])].groupby('location')[column].count(),
+                            'transport': location_graph[location_graph[column].isin(['train', 'bus', 'car', 'walk'])].groupby('location')[column].count(),
+                            'crowded': location_graph[location_graph[column].isin(['crowded', 'loud'])].groupby('location')[column].count(),
+                            'other': location_graph[~location_graph[column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].groupby('location')[column].count(),
+                        }
+                        pd.DataFrame(words).plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple', 'brown'], alpha=0.3, title=f'{column} for {first_location} and {second_location}')
+                        plt.xlabel(column)
+                        plt.ylabel('Count')
+                        plt.tight_layout()
+                        plt.show()
+
+        elif graph_choice == '3':
+            print("Graphing all locations together.")
+            location_graph = transport_df
+                
+            print(graph_columns)
+            column = input("Please enter the column you want to graph: ")
+            if column in graph_columns:
+                if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
+                    counts = location_graph.groupby('location')[column].value_counts().unstack(fill_value=0).sort_index()
+                    counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple', 'brown', 'yellow', 'gray', 'pink', 'lightblue'], alpha=0.3, title=f'{column} for all locations')
+                    plt.xlabel(column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column == 'other_transport':
+                    counts = location_graph[location_graph[column] != ""].groupby('location')[column].value_counts().unstack(fill_value=0).sort_index()
+                    counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title=f'{column} for all locations')
+                    plt.xlabel(column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column in ('often_transport', 'time_transport'):
+                    counts = location_graph.groupby('location')[column].value_counts().unstack(fill_value=0).reindex([
+                        'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
+                    ], axis=1, fill_value=0)
+                    counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title=f'{column} for all locations')
+                    plt.xlabel(column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column == 'word_transport':
+                    words = {
+                        'positive': location_graph[location_graph[column].isin(['good', 'yummy'])].groupby('location')[column].count(),
+                        'negative': location_graph[location_graph[column].isin(['bad', 'unreliable', 'inconsistent', 'tiring'])].groupby('location')[column].count(),
+                        'neutral': location_graph[location_graph[column].isin(['average', 'idk'])].groupby('location')[column].count(),
+                        'transport': location_graph[location_graph[column].isin(['train', 'bus', 'car', 'walk'])].groupby('location')[column].count(),
+                        'crowded': location_graph[location_graph[column].isin(['crowded', 'loud'])].groupby('location')[column].count(),
+                        'other': location_graph[~location_graph[column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].groupby('location')[column].count(),
+                    }
+                    pd.DataFrame(words).plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple', 'brown'], alpha=0.3, title=f'{column} for all locations')
+                    plt.xlabel(column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+        elif graph_choice == '4':
+            print(graph_columns)
+            single_column = input("Please enter the column you want to view: ")
+            if single_column in graph_columns:
+                if single_column == 'train_reliable' or single_column == 'bus_reliable' or single_column == 'transport_rating':
+                    counts = transport_df[single_column].value_counts().sort_index()
+                    counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    plt.xlabel(single_column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+                
+                elif single_column == 'other_transport':
+                    counts = transport_df[transport_df[single_column] != ""][single_column].value_counts().sort_index()
+                    counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    plt.xlabel(single_column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif single_column == 'often_transport' or single_column == 'time_transport':
+                    counts = transport_df[single_column].value_counts().reindex([
+                        'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
+                    ], fill_value=0)
+                    counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    plt.xlabel(single_column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif single_column == 'word_transport':
+                    words = {
+                        'positive': transport_df[transport_df[single_column].isin(['good', 'yummy'])][single_column].count(),
+                        'negative': transport_df[transport_df[single_column].isin(['bad', 'unreliable', 'inconsistent', 'tiring'])][single_column].count(),
+                        'neutral': transport_df[transport_df[single_column].isin(['average', 'idk'])][single_column].count(),
+                        'transport': transport_df[transport_df[single_column].isin(['train', 'bus', 'car', 'walk'])][single_column].count(),
+                        'crowded': transport_df[transport_df[single_column].isin(['crowded', 'loud'])][single_column].count(),
+                        'other': transport_df[~transport_df[single_column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])][single_column].count()
+                    }
+                    pd.Series(words).plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    plt.xlabel(single_column)
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+        elif graph_choice == '5':
+            while True:
+                print("____________________________________________________________")
+                print("|                                                          |")
+                print("|               === Select Graph (Column) ===              |")
+                print("|                                                          |")
+                print("|            1. train_reliable & bus_reliable              |")
+                print("|            2  train_reliable & transport_rating          |")
+                print("|            3  bus_reliable & transport_rating            |")
+                print("|            4. often_transport & time_transport           |")
+                print("|            5. often_transport & transport_rating         |")
+                print("|            6. time_transport & transport_rating          |")
+                print("|            7. Exit to main menu                          |")
+                print("|__________________________________________________________|")
+
+                column_choice = input("Please select an option (1-7): ")
+                if column_choice == '1':
+                    transport_df.groupby('location')[['train_reliable', 'bus_reliable']].mean().plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title='train_reliable & bus_reliable for all locations')
+                    plt.xlabel('Location')
+                    plt.ylabel('Mean Value')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column_choice == '2':
+                    transport_df.groupby('location')[['train_reliable', 'transport_rating']].mean().plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title='train_reliable & transport_rating for all locations')
+                    plt.xlabel('Location')
+                    plt.ylabel('Mean Value')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column_choice == '3':
+                    transport_df.groupby('location')[['bus_reliable', 'transport_rating']].mean().plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title='bus_reliable & transport_rating for all locations')
+                    plt.xlabel('Location')
+                    plt.ylabel('Mean Value')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column_choice == '4':
+                    counts = transport_df[['often_transport', 'time_transport']].value_counts().unstack(fill_value=0)
+                    counts.plot(kind='bar', color=['blue', 'orange', 'green', 'red', 'purple'], alpha=0.3, title='often_transport & time_transport (Total Counts)')
+                    plt.xlabel('often_transport')
+                    plt.ylabel('Count')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column_choice == '5':
+                    counts = transport_df.groupby('often_transport')['transport_rating'].mean()
+                    counts.plot(kind='bar', color='blue', alpha=0.3, title='Mean transport_rating by often_transport')
+                    plt.xlabel('often_transport')
+                    plt.ylabel('Mean Rating')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column_choice == '6':
+                    counts = transport_df.groupby('time_transport')['transport_rating'].mean()
+                    counts.plot(kind='bar', color='blue', alpha=0.3, title='Mean transport_rating by time_transport')
+                    plt.xlabel('time_transport')
+                    plt.ylabel('Mean Rating')
+                    plt.tight_layout()
+                    plt.show()
+
+                elif column_choice == '7':
+                    print("Returning to main graph menu.")
+                    break
+                
 
 def search_data():
     while True:
