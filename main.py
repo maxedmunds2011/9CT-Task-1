@@ -29,7 +29,8 @@ def main_menu():
             show_tables()
 
         elif choice == '3': 
-            show_graphs()
+            #show_graphs()
+            pass
 
         elif choice == '4':
             search_data()

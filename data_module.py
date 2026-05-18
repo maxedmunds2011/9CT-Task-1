@@ -1,8 +1,7 @@
 import csv
 import os
-
 import pandas as pd   
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt 
 
 dictionary = {
     'locations': {
@@ -96,9 +95,9 @@ def show_tables():
             print(table_locations)
             location = input("Please enter the location you want to view: ")
             if location in table_locations:
-                    table_locations.remove(location)
-                    for x in table_locations:
-                        transport_df_l = transport_df.drop(transport_df[transport_df["location"] == x].index)     
+                table_locations.remove(location)
+                for x in table_locations:
+                    transport_df_l = transport_df.drop(transport_df[transport_df["location"] == x].index)     
             print(transport_df_l)
                 
         elif table_choice == '4':
@@ -229,7 +228,7 @@ def search_data():
     while True:
         search_locations = ['Central Coast', 'Sydney', 'Other']
         numbered_search_columns = ['train_reliable', 'bus_reliable', 'transport_rating']
-        special_search_columns = ['other_transport', 'word_transport', 'often transport', 'time_transport']
+        special_search_columns = ['other_transport', 'word_transport', 'often_transport', 'time_transport']
         numbered_search_values = ['mean', 'median', 'mode', 'min', 'max', 'number']
 
         print("___________________________________________________________")
@@ -324,8 +323,8 @@ def search_data():
                             words['other'] += 1       
                     print(words)
 
-                elif column in special_search_columns and column == 'often transport' or column == 'time_transport':
-                    if column == 'often transport':
+                elif column in special_search_columns and column == 'often_transport' or column == 'time_transport':
+                    if column == 'often_transport':
                         clear_screen()
                         transport_df_often = transport_df['often_transport']
                         search_locations.remove (location)
@@ -395,20 +394,20 @@ def search_data():
             elif column in special_search_columns:
                 clear_screen()
                 if column == 'often_transport':
-                    transport_df_often = transport_df['often_transport']
-                    print(transport_df_often)
+                    transport_df_ot = transport_df['often_transport']
+                    print(transport_df_ot)
 
                 elif column == 'time_transport':
-                    transport_df_time = transport_df['time_transport']
-                    print(transport_df_time)
+                    transport_df_ot = transport_df['time_transport']
+                    print(transport_df_ot)
                 
                 print("This column has 5 different times, as you can see above.")
 
-                dictionary['columns'][column]['number1'] = transport_df_often[transport_df_often == 'Less than 15 minutes'].count()
-                dictionary['columns'][column]['number2'] = transport_df_often[transport_df_often == '15 - 30 minutes'].count()
-                dictionary['columns'][column]['number3'] = transport_df_often[transport_df_often == '30 - 45 minutes'].count()
-                dictionary['columns'][column]['number4'] = transport_df_often[transport_df_often == '45 - 60 minutes'].count()
-                dictionary['columns'][column]['number5'] = transport_df_often[transport_df_often == 'More than 60 minutes'].count()
+                dictionary['columns'][column]['number1'] = transport_df_ot[transport_df_ot == 'Less than 15 minutes'].count()
+                dictionary['columns'][column]['number2'] = transport_df_ot[transport_df_ot == '15 - 30 minutes'].count()
+                dictionary['columns'][column]['number3'] = transport_df_ot[transport_df_ot == '30 - 45 minutes'].count()
+                dictionary['columns'][column]['number4'] = transport_df_ot[transport_df_ot == '45 - 60 minutes'].count()
+                dictionary['columns'][column]['number5'] = transport_df_ot[transport_df_ot == 'More than 60 minutes'].count()
 
                 print(f"The number of entries for 'Less than 15 minutes' is: {dictionary['columns'][column]['number1']}")
                 print(f"The number of entries for '15 - 30 minutes' is: {dictionary['columns'][column]['number2']}")
