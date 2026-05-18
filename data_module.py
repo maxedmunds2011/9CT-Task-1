@@ -84,12 +84,13 @@ def show_tables():
                 print(table_columns)
                 first_column = input("Please enter the column you want to view: ")
                 second_column = input("Please enter the column you want to compare it to: ")
-                if first_column and second_column in table_columns:
-                    table_columns.remove (first_column)
-                    table_columns.remove (second_column)
-                    for x in table_columns:
-                        transport_df_c = transport_df.drop(columns=x)
-                print(transport_df_c)          
+                # Validate both inputs are valid column names
+                if first_column in table_columns and second_column in table_columns:
+                    # Select only the two requested columns
+                    transport_df_c = transport_df[[first_column, second_column]]
+                    print(transport_df_c)
+                else:
+                    print("One or both column names are invalid. Please choose from:", table_columns)
 
         elif table_choice == '3':
             print(table_locations)
@@ -193,7 +194,7 @@ def show_graphs():
                 if column in graph_columns:
                     if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
                         counts = location_graph[column].value_counts().sort_index()
-                        counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
+                        counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
                         plt.ylabel('Count')
                         plt.tight_layout()
@@ -202,7 +203,7 @@ def show_graphs():
                     elif column == 'other_transport':
                         counts = location_graph[column]
                         counts = counts[counts != ""].value_counts().sort_index()
-                        counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
+                        counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
                         plt.ylabel('Count')
                         plt.tight_layout()
@@ -212,7 +213,7 @@ def show_graphs():
                         counts = location_graph[column].value_counts().reindex([
                             'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
                         ], fill_value=0)
-                        counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
+                        counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
                         plt.ylabel('Count')
                         plt.tight_layout()
@@ -227,7 +228,7 @@ def show_graphs():
                             'crowded': location_graph[column][location_graph[column].isin(['crowded', 'loud'])].count(),
                             'other': location_graph[column][~location_graph[column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
                         }
-                        pd.Series(words).plot(kind='bar', color='blue', alpha=0.3, title=f'{column} for {single_location}')
+                        pd.Series(words).plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{column} for {single_location}')
                         plt.xlabel(column)
                         plt.ylabel('Count')
                         plt.tight_layout()
@@ -338,7 +339,7 @@ def show_graphs():
             if single_column in graph_columns:
                 if single_column == 'train_reliable' or single_column == 'bus_reliable' or single_column == 'transport_rating':
                     counts = transport_df[single_column].value_counts().sort_index()
-                    counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{single_column} for all locations')
                     plt.xlabel(single_column)
                     plt.ylabel('Count')
                     plt.tight_layout()
@@ -346,7 +347,7 @@ def show_graphs():
                 
                 elif single_column == 'other_transport':
                     counts = transport_df[transport_df[single_column] != ""][single_column].value_counts().sort_index()
-                    counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{single_column} for all locations')
                     plt.xlabel(single_column)
                     plt.ylabel('Count')
                     plt.tight_layout()
@@ -356,7 +357,7 @@ def show_graphs():
                     counts = transport_df[single_column].value_counts().reindex([
                         'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
                     ], fill_value=0)
-                    counts.plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{single_column} for all locations')
                     plt.xlabel(single_column)
                     plt.ylabel('Count')
                     plt.tight_layout()
@@ -371,7 +372,7 @@ def show_graphs():
                         'crowded': transport_df[transport_df[single_column].isin(['crowded', 'loud'])][single_column].count(),
                         'other': transport_df[~transport_df[single_column].isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])][single_column].count()
                     }
-                    pd.Series(words).plot(kind='bar', color='blue', alpha=0.3, title=f'{single_column} for all locations')
+                    pd.Series(words).plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{single_column} for all locations')
                     plt.xlabel(single_column)
                     plt.ylabel('Count')
                     plt.tight_layout()
@@ -441,7 +442,13 @@ def show_graphs():
                 elif column_choice == '7':
                     print("Returning to main graph menu.")
                     break
+
+        elif graph_choice == 6:
+            print("Returning to main menu.")
+            break
                 
+        else:
+            print("Invalid, try again.")
 
 def search_data():
     while True:
