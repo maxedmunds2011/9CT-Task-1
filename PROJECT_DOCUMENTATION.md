@@ -56,3 +56,11 @@ As of now, it seems that out of the 3 Sydney and 8 Central Coast respondants, Sy
 | time_transport | object | NN - NN or +- NN | How long a user's travel time is | + 60 min | Out of 5 strings |
 | word_transport | object | AA...AA | A word by the user to describe transport | Good | Any amount of words, no integers |
 | transport_rating | integer64 | N | The user's rating out of 10 for transport overall | 8 | Must be integer from 1 - 10 |
+
+## Prodicing and Implementing
+
+### Earlier Commits
+
+
+### README document
+To understand how the analysis works, use the README file.
