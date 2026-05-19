@@ -1,7 +1,45 @@
 import csv
 import os
+import time
+import sys
 import pandas as pd   
 import matplotlib.pyplot as plt 
+
+
+def animate_text(text, delay=0.1):
+    if isinstance(text, str):
+        for char in text:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(delay)
+        print()  # New line at the end
+        return
+
+    if isinstance(text, (list, tuple, set)):
+        for item in text:
+            sys.stdout.write(str(item))
+            sys.stdout.flush()
+            time.sleep(delay)
+            sys.stdout.write("\n")
+        print()
+        return
+
+    text_str = str(text)
+    for char in text_str:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+    print()  # New line at the end
+
+    # This is created so in-depth in case of recurring lists or variables
+
+
+def animate_by_row(lines, delay=0.5):
+    """Animates a list of strings, printing one row at a time."""
+    for line in lines:
+        print(line)
+        time.sleep(delay)
+
 
 dictionary = {
     'locations': {
@@ -55,22 +93,25 @@ def show_tables():
 
         table_locations = ['Central Coast', 'Sydney', 'Other']
         table_columns = ['location', 'train_reliable', 'bus_reliable', 'other_transport', 'often_transport', 'time_transport', 'word_transport', 'transport_rating']
-    
-        print("____________________________________________________________")
-        print("|                                                          |")
-        print("|                   === Select Table ===                   |")
-        print("|                                                          |")
-        print("|            1. Difference between two locations           |")
-        print("|            2. Difference between two columns             |")
-        print("|            3. One specific location                      |")
-        print("|            4. Exit to main menu                          |")
-        print("|__________________________________________________________|")
+
+        menu = [
+            "____________________________________________________________",
+            "|                                                          |",
+            "|                   === Select Table ===                   |",
+            "|                                                          |",
+            "|            1. Difference between two locations           |",
+            "|            2. Difference between two columns             |",
+            "|            3. One specific location                      |",
+            "|            4. Exit to main menu                          |",
+            "|__________________________________________________________|"
+        ]
+        animate_by_row(menu, delay=0.2)
 
         table_choice = input("Please select an option (1-4): ")
         transport_df = pd.read_csv('PublicTransportViewpoint.csv')
 
         if table_choice == '1':
-                print(table_locations)
+                animate_text(table_locations, delay=0.1)
                 first_location = input("Please enter the location you want to view: ")
                 second_location = input("Please enter the location you want to compare it to: ")
                 if first_location and second_location in table_locations:
@@ -81,7 +122,7 @@ def show_tables():
                 print(transport_df_l)
 
         elif table_choice == '2':
-                print(table_columns)
+                animate_text(table_columns, delay=0.1)
                 first_column = input("Please enter the column you want to view: ")
                 second_column = input("Please enter the column you want to compare it to: ")
                 # Validate both inputs are valid column names
@@ -93,7 +134,7 @@ def show_tables():
                     print("One or both column names are invalid. Please choose from:", table_columns)
 
         elif table_choice == '3':
-            print(table_locations)
+            animate_text(table_locations, delay=0.1)
             location = input("Please enter the location you want to view: ")
             if location in table_locations:
                 table_locations.remove(location)
@@ -167,29 +208,31 @@ def show_graphs():
         graph_locations = ['Central Coast', 'Sydney', 'Other']
         graph_columns = ['train_reliable', 'bus_reliable', 'transport_rating', 'other_transport', 'often_transport', 'time_transport', 'word_transport']
 
-        print("____________________________________________________________")
-        print("|                                                          |")
-        print("|                   === Select Graph ===                   |")
-        print("|                                                          |")
-        print("|            1. Graph by single location                   |")
-        print("|            2  Graph by two locations                     |")
-        print("|            3  Graph by all locations                     |")
-        print("|            4. Graph by single column                     |")
-        print("|            5. Graph by two columns                       |")
-        print("|            6. Exit to main menu                          |")
-        print("|__________________________________________________________|")
+        menu = [
+            "____________________________________________________________",
+            "|                                                          |",
+            "|                   === Select Graph ===                   |",
+            "|                                                          |",
+            "|            1. Graph by single location                   |",
+            "|            2  Graph by two locations                     |",
+            "|            3  Graph by all locations                     |",
+            "|            4. Graph by single column                     |",
+            "|            5. Graph by two columns                       |",
+            "|            6. Exit to main menu                          |",
+            "|__________________________________________________________|"
+        ]
+        animate_by_row(menu, delay=0.2)
 
         graph_choice = input("Please select an option (1-6): ")
         transport_df = pd.read_csv('PublicTransportViewpoint.csv')
         graph_data()
 
         if graph_choice == '1':
-            print(graph_locations)
+            animate_text(graph_locations, delay=0.1)
             single_location = input("Please enter the location you want to view: ")
             if single_location in graph_locations:
                 location_graph = transport_df[transport_df["location"] == single_location]
-                
-                print(graph_columns)
+                animate_text(graph_columns, delay=0.1)
                 column = input("Please enter the column you want to graph: ")
                 if column in graph_columns:
                     if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
@@ -235,13 +278,13 @@ def show_graphs():
                         plt.show()
 
         elif graph_choice == '2':
-            print(graph_locations)
+            animate_text(graph_locations, delay=0.1)
             first_location = input("Please enter the first location you want to view: ")
             second_location = input("Please enter the second location you want to view: ")
             if first_location and second_location in graph_locations:
                 location_graph = transport_df[transport_df["location"].isin([first_location, second_location])]
-                
-                print(graph_columns)
+
+                animate_text(graph_columns, delay=0.1)
                 column = input("Please enter the column you want to graph: ")
                 if column in graph_columns:
                     if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
@@ -286,10 +329,10 @@ def show_graphs():
                         plt.show()
 
         elif graph_choice == '3':
-            print("Graphing all locations together.")
+            animate_text("Graphing all locations together.", delay=0.1)
             location_graph = transport_df
                 
-            print(graph_columns)
+            animate_text(graph_columns, delay=0.05)
             column = input("Please enter the column you want to graph: ")
             if column in graph_columns:
                 if column in ('train_reliable', 'bus_reliable', 'transport_rating'):
@@ -334,7 +377,7 @@ def show_graphs():
                     plt.show()
 
         elif graph_choice == '4':
-            print(graph_columns)
+            animate_text(graph_columns, delay=0.1)
             single_column = input("Please enter the column you want to view: ")
             if single_column in graph_columns:
                 if single_column == 'train_reliable' or single_column == 'bus_reliable' or single_column == 'transport_rating':
@@ -380,18 +423,23 @@ def show_graphs():
 
         elif graph_choice == '5':
             while True:
-                print("____________________________________________________________")
-                print("|                                                          |")
-                print("|               === Select Graph (Column) ===              |")
-                print("|                                                          |")
-                print("|            1. train_reliable & bus_reliable              |")
-                print("|            2  train_reliable & transport_rating          |")
-                print("|            3  bus_reliable & transport_rating            |")
-                print("|            4. often_transport & time_transport           |")
-                print("|            5. often_transport & transport_rating         |")
-                print("|            6. time_transport & transport_rating          |")
-                print("|            7. Exit to main menu                          |")
-                print("|__________________________________________________________|")
+
+                menu = [
+                    "____________________________________________________________",
+                    "|                                                          |",
+                    "|               === Select Graph (Column) ===              |",
+                    "|                                                          |",
+                    "|            1. train_reliable & bus_reliable              |",
+                    "|            2  train_reliable & transport_rating          |"
+                    "|            3  bus_reliable & transport_rating            |",
+                    "|            4. often_transport & time_transport           |",
+                    "|            5. often_transport & transport_rating         |",
+                    "|            6. time_transport & transport_rating          |",
+                    "|            7. Exit to main menu                          |",
+                    "|__________________________________________________________|"
+                ]
+
+                animate_by_row(menu, delay=0.2)
 
                 column_choice = input("Please select an option (1-7): ")
                 if column_choice == '1':
@@ -458,22 +506,25 @@ def search_data():
         special_search_columns = ['other_transport', 'word_transport', 'often_transport', 'time_transport']
         numbered_search_values = ['mean', 'median', 'mode', 'min', 'max', 'number']
 
-        print("___________________________________________________________")
-        print("|                                                         |")
-        print("|                    === Search Data ===                  |")
-        print("|                                                         |")
-        print("|            1. Search by location                        |")
-        print("|            2. Search by column                          |")
-        print("|            3. Look up value meanings                    |")
-        print("|            4. Return to main menu                       |")
-        print("|_________________________________________________________|")
+        menu = [
+            "___________________________________________________________",
+            "|                                                         |",
+            "|                    === Search Data ===                  |",
+            "|                                                         |",
+            "|            1. Search by location                        |",
+            "|            2. Search by column                          |",
+            "|            3. Look up value meanings                    |",
+            "|            4. Return to main menu                       |",
+            "|_________________________________________________________|"
+        ]
+        animate_by_row(menu, delay=0.2)
 
         search_choice = input("Please select an option (1-4): ")
         transport_df = pd.read_csv('PublicTransportViewpoint.csv')
 
         if search_choice == '1':
             clear_screen()
-            print(search_locations)
+            animate_text(search_locations, delay=0.1)
             location = input("Please enter the location you want to search for: ")
             if location in search_locations:
                 clear_screen()
@@ -643,47 +694,41 @@ def search_data():
                 print(f"The number of entries for 'More than 60 minutes' is: {dictionary['columns'][column]['number5']}")
 
         elif search_choice == '3':
-            print("This option will give you some insight into the data and the definitions for the values like the mean.")
+            animate_text("This option will give you some insight into the data and the definitions for the values like the mean.", delay=0.05)
             explain_types = ['columns', 'values']
             print(f"The types of explanations you can get are: {explain_types}")
             explanation = input("Please enter what you want to know more about: ")
             if explanation in explain_types and explanation == 'columns':
-                print("The columns are the different categories of data that we have collected. They include:")
+                animate_text("The columns are the different categories of data that we have collected. They include:", delay=0.05)
 
-                print("location: The location of the person who filled out the survey." \
-                "")
-                print("train_reliable: How reliable the train is on a scale of 1-5, with 1 being very unreliable and 5 being very reliable." \
-                "")
-                print("bus_reliable: How reliable the bus is on a scale of 1-5, with 1 being very unreliable and 5 being very reliable." \
-                "")
-                print("other_transport: Any other form of transport that the person uses, such as walking or metro." \
-                "")
-                print("often_transport: How often the person uses public transport, with options such as 'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', and 'More than 60 minutes'." \
-                "")
-                print("time_transport: How long it takes for the person to get to their destination using public transport, with options that are the same as 'often_transport'." \
-                "")
-                print("word_transport: A word that the person associates with public transport. It can be any word, but has been categorized into positive, neutral, negative, transport, crowded, and other." \
-                "")
-                print("transport_rating: A rating of how they feel about public transport on a scale of 1-10, with 1 being very negative and 10 being very positive." \
-                "")
+                info = [
+                    "location: The location of the person who filled out the survey.\n",
+                    "train_reliable: How reliable the train is on a scale of 1-5, with 1 being very unreliable and 5 being very reliable.\n",
+                    "bus_reliable: How reliable the bus is on a scale of 1-5, with 1 being very unreliable and 5 being very reliable.\n",
+                    "other_transport: Any other form of transport that the person uses, such as walking or metro.\n",
+                    "often_transport: How often the person uses public transport, with options such as 'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', and 'More than 60 minutes'.\n",
+                    "time_transport: How long it takes for the person to get to their destination using public transport, with options that are the same as 'often_transport'.\n",
+                    "word_transport: A word that the person associates with public transport. It can be any word, but has been categorized into positive, neutral, negative, transport, crowded, and other.\n",
+                    "transport_rating: A rating of how they feel about public transport on a scale of 1-10, with 1 being very negative and 10 being very positive.\n"
+                ]
 
+                animate_by_row(info, delay=0.3)
+                
                 continued = input("Press any key to continue...")
 
             elif explanation in explain_types and explanation == 'values':
-                print("The values are the different types of data that we have collected for each column. They include:" \
-                "")
-                print("mean: The average value for a column." \
-                "")
-                print("median: The middle value for a column when the values are arranged in order." \
-                "")
-                print("mode: The most common value for a column." \
-                "")
-                print("min: The minimum value for a column."
-                      )
-                print("max: The maximum value for a column." \
-                "")
-                print("number: The number of entries for a column." \
-                "")
+
+                info = [
+                    "The values are the different types of data that we have collected for each column. They include: \n",
+                    "mean: The average value for a column. \n",
+                    "median: The middle value for a column when the values are arranged in order. \n",
+                    "mode: The most common value for a column. \n",
+                    "min: The minimum value for a column. \n",
+                    "max: The maximum value for a column. \n",
+                    "number: The number of entries for a column. \n"
+                ]
+                
+                animate_by_row(info, delay=0.3)
 
                 continued = input("Press any key to continue...")
 
@@ -696,25 +741,26 @@ def change_data():
 
 
 
-    print("This option will allow you to change the data in the dataset. You can change the values for the columns or the locations.")  
+    animate_text("This option will allow you to change the data in the dataset. You can change the values for the columns or the locations.", delay=0.05)
     while True:
         change_locations = ['Central Coast', 'Sydney', 'Other']
 
-
-        print("____________________________________________________________")
-        print("|                                                          |")
-        print("|                   === Change Data ===                    |")
-        print("|                                                          |")
-        print("|            1. Change location data                       |")
-        print("|            2. Change column data                         |")
-        print("|            3. Change other data                          |")
-        print("|            4. Exit to main menu                          |")
-        print("|__________________________________________________________|")
-
+        menu = [
+            "____________________________________________________________",
+            "|                                                          |",
+            "|                   === Change Data ===                    |",
+            "|                                                          |",
+            "|            1. Change location data                       |",
+            "|            2. Change column data                         |",
+            "|            3. Change other data                          |",
+            "|            4. Exit to main menu                          |",
+            "|__________________________________________________________|"
+        ]
+        animate_by_row(menu, delay=0.2)
         change_choice = input("Please select an option (1-4): ")
 
         if change_choice == '1':
-            print("This option will allow you to change the location data for a specific entry. You can change the location to either Central Coast, Sydney, or Other.")
+            animate_text("This option will allow you to change the location data for a specific entry. You can change the location to either Central Coast, Sydney, or Other.", delay=0.05)
 
             change_dataset = pd.read_csv('PublicTransportViewpoint.csv')
             print(change_dataset)
@@ -734,7 +780,7 @@ def change_data():
                 print("Location data changed successfully.")
 
         elif change_choice == '2':
-            print("This option will allow you to change the column data for a specific entry. You can change the data for any of the columns, but you must follow the same format as the original data.")
+            animate_text("This option will allow you to change the column data for a specific entry. You can change the data for any of the columns, but you must follow the same format as the original data.", delay=0.05)
 
             change_dataset = pd.read_csv('PublicTransportViewpoint.csv')
             print(change_dataset)
