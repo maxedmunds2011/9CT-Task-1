@@ -60,7 +60,33 @@ As of now, it seems that out of the 3 Sydney and 8 Central Coast respondants, Sy
 ## Prodicing and Implementing
 
 ### Earlier Commits
+Commit 5638f52 - Made a start on the Identifying and Defining section.
 
+Commit 741c03e - Added Research and Planning title screens.
+
+Commit 4f6c6f7 - Began work on the data dictionary.
+
+Commit 0999397 - Finished the data dictionary and added the PublicTransportViewpoint_csv file
+
+Commit 1466302 - Created the main menu user interface
+
+Commit 60f2fa2 - Added the data_module python file
+
+Commit 5818901 - Added Research paragraphs to the Research and Planning section
+
+Commit 6ca7fab - Updated the PublicTransportViewpoint_csv file with more entries
+
+Commit c49c860 - Added the show_tables menu screen.
+
+Commit 4d35bac - Updated the csv file again and finished the show_tables function.
+
+Commit 31f4159 - Updated the csv file for the second last time and fixed the show_tables functuon.
+
+Commit 7804606 - Added spacing to functions and files.
+
+Commit 28763f3 - Implemented a .json file.
+
+Commit 71f0fb7 - Updated csv file for the last time and made sure current code runs smoothly.
 
 ### README document
 To understand how the analysis works, use the README file.
