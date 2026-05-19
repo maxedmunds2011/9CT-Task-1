@@ -443,12 +443,13 @@ def show_graphs():
                     print("Returning to main graph menu.")
                     break
 
-        elif graph_choice == 6:
+        elif graph_choice == '6':
             print("Returning to main menu.")
             break
                 
         else:
             print("Invalid, try again.")
+
 
 def search_data():
     while True:
