@@ -752,12 +752,11 @@ def change_data():
             "|                                                          |",
             "|            1. Change location data                       |",
             "|            2. Change column data                         |",
-            "|            3. Change other data                          |",
-            "|            4. Exit to main menu                          |",
+            "|            3. Exit to main menu                          |",
             "|__________________________________________________________|"
         ]
         animate_by_row(menu, delay=0.2)
-        change_choice = input("Please select an option (1-4): ")
+        change_choice = input("Please select an option (1-3): ")
 
         if change_choice == '1':
             animate_text("This option will allow you to change the location data for a specific entry. You can change the location to either Central Coast, Sydney, or Other.", delay=0.05)
@@ -794,12 +793,12 @@ def change_data():
                 change_dataset.to_csv('PublicTransportViewpoint.csv', index=False)
                 print("Column data changed successfully.")
 
+        elif change_choice == '3':
+            print("Returning to main menu.")
+            break
+
 
 def save_data():
-    transport_df = "PublicTransportViewpoint.csv"
-    with open('output.csv', 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerows(transport_df)
-        with open('output.csv', 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerows(transport_df)
+    transport_df = pd.read_csv('PublicTransportViewpoint.csv')
+    transport_df.to_csv('output.csv', index=False)
+    print("Data saved to output.csv")

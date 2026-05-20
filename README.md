@@ -46,8 +46,33 @@ Returns the user to the main menu screen.
 
 
 ## Search Data
-Gives you 4 options for search data:
+Gives you 4 options for searching for data:
 
 ### Search by location
 A location is chosen out of the three, then a specific column, then a value out of: mean, median, mode, min, max and number
 
+### Search by column
+A column is chosen out of the ones avaliables, then a value is calculated for that entire column.
+
+### Look up value meanings
+Gives the definition of either values or columns and what they do.
+
+### Exit to main menu
+Returns the user to the main menu screen.
+
+
+## Change Data
+Gives you 4 options for changing data:
+
+### Change location data
+A singular row from a location is changed into another location.
+
+### Change column data
+A singular column's box will allow you to change the data.
+
+### Exit to main menu
+Returns the user to the main menu screen.
+
+
+## Save Data
+This small function creates a variable that works as a changing string, but doesn't affect the actual .csv file.
