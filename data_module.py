@@ -423,14 +423,14 @@ def show_graphs():
 
         elif graph_choice == '5':
             while True:
-
+                clear_screen()
                 menu = [
                     "____________________________________________________________",
                     "|                                                          |",
                     "|               === Select Graph (Column) ===              |",
                     "|                                                          |",
                     "|            1. train_reliable & bus_reliable              |",
-                    "|            2  train_reliable & transport_rating          |"
+                    "|            2  train_reliable & transport_rating          |",
                     "|            3  bus_reliable & transport_rating            |",
                     "|            4. often_transport & time_transport           |",
                     "|            5. often_transport & transport_rating         |",

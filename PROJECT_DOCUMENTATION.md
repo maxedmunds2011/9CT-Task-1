@@ -90,3 +90,8 @@ Commit 71f0fb7 - Updated csv file for the last time and made sure current code r
 
 ### README document
 To understand how the analysis works, use the README file.
+
+## Testing and Evaluating
+
+### Analysis and Conclusion
+My original hypothesis stated that Sydney kids overall had a greater transport appreciation than Central Coast kids. However, the mean transport rating for Central Coast was 7.03, while Sydney was 6.61. Over all locations, a 4/5 for train reliability and a 3/5 for bus reliability were the modes. Other analysis results included that most people's transport came every 15 - 30 minutes, and it took 45 - 60 minutes to get to school. These results seemed to have no impact on the transport rating. Obviously, people with more positive words for transport had higher ratings for transport appreciation, though there were more negative words than positive words (even though the transport rating was 6.98). While my hypothesis was incorrect, certain aspects such as train reliability were greater for Sydney, though Central Coast had a better viewpoint overall.
