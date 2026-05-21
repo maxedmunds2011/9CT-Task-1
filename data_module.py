@@ -118,8 +118,8 @@ def show_tables():
                     table_locations.remove(first_location)
                     table_locations.remove(second_location)
                     for x in table_locations:
-                        transport_df_l = transport_df.drop(transport_df[transport_df["location"] == x].index)
-                print(transport_df_l)
+                        transport_df = transport_df.drop(transport_df[transport_df["location"] == x].index)
+                    print(transport_df)
 
         elif table_choice == '2':
                 animate_text(table_columns, delay=0.1)
@@ -400,6 +400,7 @@ def show_graphs():
                     counts = transport_df[single_column].value_counts().reindex([
                         'Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes'
                     ], fill_value=0)
+                    order = ['Less than 15 minutes', '15 - 30 minutes', '30 - 45 minutes', '45 - 60 minutes', 'More than 60 minutes']
                     counts.plot(kind='bar', color=['blue', 'red', 'green', 'purple', 'yellow'], alpha=0.3, title=f'{single_column} for all locations')
                     plt.xlabel(single_column)
                     plt.ylabel('Count')

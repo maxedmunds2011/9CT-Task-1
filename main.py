@@ -51,4 +51,5 @@ def main_menu():
                 print("Invalid option.")
             
 
-main_menu()
+if __name__ == "__main__":
+       main_menu()
