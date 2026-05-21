@@ -769,15 +769,19 @@ def change_data():
             change_location = input("Please enter the location you want to change: ")
 
             if change_location in change_locations:
-                change_locations.remove(change_location)
-                for x in change_locations:
-                    change_dataset = change_dataset.drop(change_dataset[change_dataset["location"] == x].index)
-                
-                print(change_dataset)
-                index = int(input("Please enter the index of the entry you want to change: "))
-                change_dataset.at[index, 'location'] = input("Please enter the new location: ")
-                change_dataset.to_csv('PublicTransportViewpoint.csv', index=False)
-                print("Location data changed successfully.")
+                matching_rows = change_dataset[change_dataset["location"] == change_location]
+                if matching_rows.empty:
+                    print(f"No rows found for {change_location}.")
+                else:
+                    print(matching_rows)
+                    index = int(input("Please enter the index of the entry you want to change: "))
+                    if index in change_dataset.index:
+                        new_location = input("Please enter the new location: ")
+                        change_dataset.at[index, 'location'] = new_location
+                        change_dataset.to_csv('PublicTransportViewpoint.csv', index=False)
+                        print("Location data changed successfully.")
+                    else:
+                        print("Invalid index. No changes were saved.")
 
         elif change_choice == '2':
             animate_text("This option will allow you to change the column data for a specific entry. You can change the data for any of the columns, but you must follow the same format as the original data.", delay=0.05)
@@ -797,9 +801,3 @@ def change_data():
         elif change_choice == '3':
             print("Returning to main menu.")
             break
-
-
-def save_data():
-    transport_df = pd.read_csv('PublicTransportViewpoint.csv')
-    transport_df.to_csv('output.csv', index=False)
-    print("Data saved to output.csv")

@@ -1,9 +1,20 @@
-from data_module import display_dataset, show_tables, search_data, clear_screen, change_data, show_graphs, save_data, animate_by_row
+from data_module import (display_dataset, 
+                        show_tables, 
+                        search_data, 
+                        clear_screen, 
+                        change_data, 
+                        show_graphs,  
+                        animate_by_row
+                        )
 import os
+import shutil
 
 
 def main_menu():
-    while True: 
+    shutil.copyfile('PublicTransportViewpointUntampered.csv', 'PublicTransportViewpoint.csv')
+        
+    while True:    
+
         def start_screen():
             screen = [
             "___________________________________________________________",
@@ -14,15 +25,14 @@ def main_menu():
             "|            2. View tables                               |",
             "|            3. View graphs                               |",
             "|            4. Search for data                           |",
-            "|            5. Update an entry                           |",
-            "|            6. Save data and changes                     |",
-            "|            7. Exit system                               |",
+            "|            5. Update and save an entry                           |",
+            "|            6. Exit system                               |",
             "|_________________________________________________________|"
             ]
             animate_by_row(screen, delay=0.2)
 
         start_screen()
-        choice = input("Please select an option (1-7): ")
+        choice = input("Please select an option (1-6): ")
         clear_screen()
 
         if choice == '1':
@@ -41,9 +51,6 @@ def main_menu():
                 change_data()
 
         elif choice == '6':
-                save_data()
-
-        elif choice == '7':
                 print("Exiting the system.")
                 break
 
