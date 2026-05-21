@@ -114,11 +114,9 @@ def show_tables():
                 animate_text(table_locations, delay=0.1)
                 first_location = input("Please enter the location you want to view: ")
                 second_location = input("Please enter the location you want to compare it to: ")
-                if first_location and second_location in table_locations:
-                    table_locations.remove(first_location)
-                    table_locations.remove(second_location)
-                    for x in table_locations:
-                        transport_df = transport_df.drop(transport_df[transport_df["location"] == x].index)
+                if first_location in table_locations and second_location in table_locations:
+                    selected_locations = [first_location, second_location]
+                    transport_df = transport_df[transport_df["location"].isin(selected_locations)]
                     print(transport_df)
 
         elif table_choice == '2':
@@ -137,10 +135,8 @@ def show_tables():
             animate_text(table_locations, delay=0.1)
             location = input("Please enter the location you want to view: ")
             if location in table_locations:
-                table_locations.remove(location)
-                for x in table_locations:
-                    transport_df_l = transport_df.drop(transport_df[transport_df["location"] == x].index)     
-            print(transport_df_l)
+                transport_df_l = transport_df[transport_df["location"] == location]
+                print(transport_df_l)
                 
         elif table_choice == '4':
             print("Returning to main menu.")
@@ -153,31 +149,28 @@ def show_tables():
 def graph_data():
     transport_df = pd.read_csv('PublicTransportViewpoint.csv')
     data_locations = ['Central Coast', 'Sydney', 'Other']
+    numerical_columns = ['train_reliable', 'bus_reliable', 'transport_rating']
+    numberstring_columns = ['often_transport', 'time_transport']
     for x in data_locations:
         loc_df = transport_df[transport_df['location'] == x]
 
-        dictionary['locations'][x]['train_reliable']['mean'] = loc_df['train_reliable'].mean().round(2)
-        dictionary['locations'][x]['train_reliable']['median'] = loc_df['train_reliable'].median().round(2)
-        dictionary['locations'][x]['train_reliable']['mode'] = loc_df['train_reliable'].mode().round(2).tolist()
-        dictionary['locations'][x]['train_reliable']['min'] = loc_df['train_reliable'].min()
-        dictionary['locations'][x]['train_reliable']['max'] = loc_df['train_reliable'].max()
-        dictionary['locations'][x]['train_reliable']['number'] = loc_df['train_reliable'].count()
-
-        dictionary['locations'][x]['bus_reliable']['mean'] = loc_df['bus_reliable'].mean().round(2)
-        dictionary['locations'][x]['bus_reliable']['median'] = loc_df['bus_reliable'].median().round(2)
-        dictionary['locations'][x]['bus_reliable']['mode'] = loc_df['bus_reliable'].mode().round(2).tolist()
-        dictionary['locations'][x]['bus_reliable']['min'] = loc_df['bus_reliable'].min()
-        dictionary['locations'][x]['bus_reliable']['max'] = loc_df['bus_reliable'].max()
-        dictionary['locations'][x]['bus_reliable']['number'] = loc_df['bus_reliable'].count()
-
-        dictionary['locations'][x]['transport_rating']['mean'] = loc_df['transport_rating'].mean().round(2)
-        dictionary['locations'][x]['transport_rating']['median'] = loc_df['transport_rating'].median().round(2)
-        dictionary['locations'][x]['transport_rating']['mode'] = loc_df['transport_rating'].mode().round(2).tolist()
-        dictionary['locations'][x]['transport_rating']['min'] = loc_df['transport_rating'].min()
-        dictionary['locations'][x]['transport_rating']['max'] = loc_df['transport_rating'].max()
-        dictionary['locations'][x]['transport_rating']['number'] = loc_df['transport_rating'].count()
+        for y in numerical_columns:
+            dictionary['locations'][x][y]['mean'] = loc_df[y].mean().round(2)
+            dictionary['locations'][x][y]['median'] = loc_df[y].median().round(2)
+            dictionary['locations'][x][y]['mode'] = loc_df[y].mode().round(2).tolist()
+            dictionary['locations'][x][y]['min'] = loc_df[y].min()
+            dictionary['locations'][x][y]['max'] = loc_df[y].max()
+            dictionary['locations'][x][y]['number'] = loc_df[y].count()
 
         dictionary['locations'][x]['other_transport'] = loc_df['other_transport'].tolist()
+
+        for y in numberstring_columns:
+            series = loc_df[y]
+            dictionary['locations'][x][y]['number1'] = series[series == 'Less than 15 minutes'].count()
+            dictionary['locations'][x][y]['number2'] = series[series == '15 - 30 minutes'].count()
+            dictionary['locations'][x][y]['number3'] = series[series == '30 - 45 minutes'].count()
+            dictionary['locations'][x][y]['number4'] = series[series == '45 - 60 minutes'].count()
+            dictionary['locations'][x][y]['number5'] = series[series == 'More than 60 minutes'].count()
 
         word_series = loc_df['word_transport']
         dictionary['locations'][x]['word_transport']['positive'] = word_series[word_series.isin(['good', 'yummy'])].count()
@@ -186,20 +179,6 @@ def graph_data():
         dictionary['locations'][x]['word_transport']['transport'] = word_series[word_series.isin(['train', 'bus', 'car', 'walk'])].count()
         dictionary['locations'][x]['word_transport']['crowded'] = word_series[word_series.isin(['crowded', 'loud'])].count()
         dictionary['locations'][x]['word_transport']['other'] = word_series[~word_series.isin(['good', 'yummy', 'bad', 'unreliable', 'inconsistent', 'tiring', 'average', 'idk', 'train', 'bus', 'car', 'walk', 'crowded', 'loud'])].count()
-
-        often_series = loc_df['often_transport']
-        dictionary['locations'][x]['often_transport']['number1'] = often_series[often_series == 'Less than 15 minutes'].count()
-        dictionary['locations'][x]['often_transport']['number2'] = often_series[often_series == '15 - 30 minutes'].count()
-        dictionary['locations'][x]['often_transport']['number3'] = often_series[often_series == '30 - 45 minutes'].count()
-        dictionary['locations'][x]['often_transport']['number4'] = often_series[often_series == '45 - 60 minutes'].count()
-        dictionary['locations'][x]['often_transport']['number5'] = often_series[often_series == 'More than 60 minutes'].count()
-
-        time_series = loc_df['time_transport']
-        dictionary['locations'][x]['time_transport']['number1'] = time_series[time_series == 'Less than 15 minutes'].count()
-        dictionary['locations'][x]['time_transport']['number2'] = time_series[time_series == '15 - 30 minutes'].count()
-        dictionary['locations'][x]['time_transport']['number3'] = time_series[time_series == '30 - 45 minutes'].count()
-        dictionary['locations'][x]['time_transport']['number4'] = time_series[time_series == '45 - 60 minutes'].count()
-        dictionary['locations'][x]['time_transport']['number5'] = time_series[time_series == 'More than 60 minutes'].count()
 
 
 def show_graphs():
@@ -281,7 +260,7 @@ def show_graphs():
             animate_text(graph_locations, delay=0.1)
             first_location = input("Please enter the first location you want to view: ")
             second_location = input("Please enter the second location you want to view: ")
-            if first_location and second_location in graph_locations:
+            if first_location in graph_locations and second_location in graph_locations:
                 location_graph = transport_df[transport_df["location"].isin([first_location, second_location])]
 
                 animate_text(graph_columns, delay=0.1)
@@ -561,17 +540,9 @@ def search_data():
 
                 elif column in special_search_columns and column == 'other_transport':
                     clear_screen()
-                    transport_df_other = transport_df['other_transport']
-                    search_locations.remove (location)
-                    for x in search_locations:
-                        transport_df_other = transport_df_other.drop(transport_df[transport_df["location"] == x].index)
-                    
-                    for y in transport_df_other:
-                        if y == "":
-                            transport_df_other = transport_df_other.drop(transport_df[transport_df["other_transport"] == y].index)
-
+                    transport_df_other = transport_df.loc[transport_df['location'] == location, 'other_transport']
+                    transport_df_other = transport_df_other[transport_df_other != ""]
                     print(transport_df_other)
-
 
                 elif column in special_search_columns and column == 'word_transport':
                     clear_screen()
@@ -602,38 +573,22 @@ def search_data():
                             words['other'] += 1       
                     print(words)
 
-                elif column in special_search_columns and column == 'often_transport' or column == 'time_transport':
-                    if column == 'often_transport':
-                        clear_screen()
-                        transport_df_often = transport_df['often_transport']
-                        search_locations.remove (location)
-                        for x in search_locations:
-                            transport_df_often = transport_df_often.drop(transport_df[transport_df["location"] == x].index)
-                        
-                        print(transport_df_often)
-                    
-                    elif column in special_search_columns and column == 'time_transport':
-                        clear_screen()
-                        transport_df_time = transport_df['time_transport']
-                        search_locations.remove (location)
-                        for x in search_locations:
-                            transport_df_time = transport_df_time.drop(transport_df[transport_df["location"] == x].index)
-                        
-                        print(transport_df_time)
-                    
+                elif column in special_search_columns and (column == 'often_transport' or column == 'time_transport'):
+                    clear_screen()
+                    transport_df_ot = transport_df.loc[transport_df['location'] == location, column]
+                    print(transport_df_ot)
                     print("This column has 5 different times, as you can see above.")
 
-                    dictionary['locations'][location][column]['number1'] = transport_df_often[transport_df_often == 'Less than 15 minutes'].count()
-                    dictionary['locations'][location][column]['number2'] = transport_df_often[transport_df_often == '15 - 30 minutes'].count()
-                    dictionary['locations'][location][column]['number3'] = transport_df_often[transport_df_often == '30 - 45 minutes'].count()
-                    dictionary['locations'][location][column]['number4'] = transport_df_often[transport_df_often == '45 - 60 minutes'].count()
-                    dictionary['locations'][location][column]['number5'] = transport_df_often[transport_df_often == 'More than 60 minutes'].count()
-
-                    print(f"The number of entries for 'Less than 15 minutes' for {location} is: {dictionary['locations'][location][column]['number1']}")
-                    print(f"The number of entries for '15 - 30 minutes' for {location} is: {dictionary['locations'][location][column]['number2']}")
-                    print(f"The number of entries for '30 - 45 minutes' for {location} is: {dictionary['locations'][location][column]['number3']}")
-                    print(f"The number of entries for '45 - 60 minutes' for {location} is: {dictionary['locations'][location][column]['number4']}")
-                    print(f"The number of entries for 'More than 60 minutes' for {location} is: {dictionary['locations'][location][column]['number5']}")
+                    number_column_data = {
+                        'number1': 'Less than 15 minutes',
+                        'number2': '15 - 30 minutes',
+                        'number3': '30 - 45 minutes',
+                        'number4': '45 - 60 minutes',
+                        'number5': 'More than 60 minutes'
+                    }
+                    for x in number_column_data:
+                        dictionary['columns'][column][x] = transport_df_ot[transport_df_ot == number_column_data[x]].count()
+                        print(f"The number of entries for '{number_column_data[x]}' is: {dictionary['columns'][column][x]}")
 
 
         elif search_choice == '2':
@@ -682,17 +637,16 @@ def search_data():
                 
                 print("This column has 5 different times, as you can see above.")
 
-                dictionary['columns'][column]['number1'] = transport_df_ot[transport_df_ot == 'Less than 15 minutes'].count()
-                dictionary['columns'][column]['number2'] = transport_df_ot[transport_df_ot == '15 - 30 minutes'].count()
-                dictionary['columns'][column]['number3'] = transport_df_ot[transport_df_ot == '30 - 45 minutes'].count()
-                dictionary['columns'][column]['number4'] = transport_df_ot[transport_df_ot == '45 - 60 minutes'].count()
-                dictionary['columns'][column]['number5'] = transport_df_ot[transport_df_ot == 'More than 60 minutes'].count()
-
-                print(f"The number of entries for 'Less than 15 minutes' is: {dictionary['columns'][column]['number1']}")
-                print(f"The number of entries for '15 - 30 minutes' is: {dictionary['columns'][column]['number2']}")
-                print(f"The number of entries for '30 - 45 minutes' is: {dictionary['columns'][column]['number3']}")
-                print(f"The number of entries for '45 - 60 minutes' is: {dictionary['columns'][column]['number4']}")
-                print(f"The number of entries for 'More than 60 minutes' is: {dictionary['columns'][column]['number5']}")
+                number_column_data = {
+                    'number1': 'Less than 15 minutes',
+                    'number2': '15 - 30 minutes',
+                    'number3': '30 - 45 minutes',
+                    'number4': '45 - 60 minutes',
+                    'number5': 'More than 60 minutes'
+                }
+                for x in number_column_data:
+                    dictionary['columns'][column][x] = transport_df_ot[transport_df_ot == number_column_data[x]].count()
+                    print(f"The number of entries for '{number_column_data[x]}' is: {dictionary['columns'][column][x]}")
 
         elif search_choice == '3':
             animate_text("This option will give you some insight into the data and the definitions for the values like the mean.", delay=0.05)

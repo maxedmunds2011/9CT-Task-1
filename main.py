@@ -25,7 +25,7 @@ def main_menu():
             "|            2. View tables                               |",
             "|            3. View graphs                               |",
             "|            4. Search for data                           |",
-            "|            5. Update and save an entry                           |",
+            "|            5. Update and save an entry                  |",
             "|            6. Exit system                               |",
             "|_________________________________________________________|"
             ]

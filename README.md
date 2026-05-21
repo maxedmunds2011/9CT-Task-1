@@ -72,7 +72,3 @@ A singular column's box will allow you to change the data.
 
 ### Exit to main menu
 Returns the user to the main menu screen.
-
-
-## Save Data
-This small function creates a variable that works as a changing string, but doesn't affect the actual .csv file.
